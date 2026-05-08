@@ -1,0 +1,70 @@
+cabal-version:        3.8
+
+name:                 ocelli
+version:              0.1.0.0
+synopsis:             Operational diagnostics for lazy Haskell programs
+
+description:          ocelli is an experimental operational-analysis tool for Haskell.
+                      It aims to make normally implicit runtime properties such as laziness,
+                      strictness, thunk accumulation, allocation, retention, missed specialization,
+                      and profiling evidence more visible to developers.
+
+category:             Development, Haskell, Language
+
+homepage:             https://github.com/lucasbrixner/ocelli
+bug-reports:          https://github.com/lucasbrixner/ocelli/issues
+
+license:              BSD-3-Clause
+license-file:         LICENSE
+author:               Lucas Brixner Riça
+maintainer:           io.brixner@gmail.com
+copyright:            2026 Lucas Brixner Riça
+
+build-type:           Simple
+
+extra-doc-files:      README.md
+                      CHANGELOG.md
+                      docs/ROADMAP.md
+
+extra-source-files:   examples/Clean.hs
+                      examples/FoldlThunk.hs
+                      examples/LazyRecord.hs
+                      examples/LazyState.hs
+
+source-repository head
+    type:             git
+    location:         https://github.com/lucasbrixner/ocelli.git
+
+common warnings
+    ghc-options:      -Wall
+
+library
+    import:           warnings
+
+    exposed-modules:  Ocelli.Check
+                      Ocelli.Diagnostic
+                      Ocelli.FileDiscovery
+                      Ocelli.Render
+                      Ocelli.Rules.Foldl
+                      Ocelli.Rules.LazyRecord
+                      Ocelli.Rules.LazyState
+
+    build-depends:    base >=4.18 && <4.19,
+                      directory >=1.3 && <1.4,
+                      filepath >=1.4 && <1.5
+
+    hs-source-dirs:   src
+
+    default-language: GHC2021
+
+executable ocelli
+    import:           warnings
+
+    main-is:          Main.hs
+
+    build-depends:    base >=4.18 && <4.19,
+                      ocelli
+
+    hs-source-dirs:   app
+
+    default-language: GHC2021
