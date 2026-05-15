@@ -1,4 +1,4 @@
-# ocelli — Engineering Roadmap
+# `ocelli` — Engineering Roadmap
 
 This is a spec-driven engineering plan. Each phase has a goal, concrete tasks,
 and acceptance criteria. Tasks and criteria are tracked with checkboxes: mark
@@ -24,13 +24,13 @@ This document is scoped to engineering work.
 
 ## Version support policy
 
-ocelli targets GHC **9.6.7** (current GHCup recommended set with HLS) and more
+`ocelli` targets GHC **9.6.7** (current GHCup recommended set with HLS) and more
 recent GHC releases supported by HLS.
 
 Decision for the parser work: build against a **single recent `ghc-lib-parse`
 series** (track the latest stable line, e.g. 9.8.x or 9.10.x) rather than
 attempting per-version parsing. Parsing is forgiving across minor versions, so
-one recent `ghc-lib-parse` can parse the dialects ocelli cares about. Strict
+one recent `ghc-lib-parse` can parse the dialects `ocelli` cares about. Strict
 per-version locking only becomes necessary at Phase 5 (Core/demand), which is
 genuinely version-fragile. The exact pin is a task in Phase 1.
 
@@ -41,13 +41,13 @@ The order is impact-to-effort, with hard dependencies respected:
 1. **Parser first.** Every rule sits on line-scanning today. A real AST kills the
    false positives, and — critically — forces the rules into the shape HLS will
    hand them later. Skipping this means writing the rules twice.
-2. **JSON output** turns ocelli from "a CLI that prints text" into an engine
+2. **JSON output** turns `ocelli` from "a CLI that prints text" into an engine
    something else can consume. It also defines a stable, testable contract.
 3. **Golden tests** must land before further rule work: the parser refactor will
    touch every rule and there is currently no safety net.
 4. **HLS plugin** is the practical-tool payoff. Diagnostics first (the big leap),
    then hover (cheap), then code actions for select rules (expensive, lower ROI).
-5. **Core/demand analysis** is what makes ocelli more than a linter, but it has
+5. **Core/demand analysis** is what makes `ocelli` more than a linter, but it has
    the worst short-term impact-to-effort ratio. It comes after a solid parsed-AST
    foundation and a working plugin, and needs its own design pass.
 
@@ -172,7 +172,7 @@ refactor touched every rule; nothing currently guards against silent breakage.
 
 ## Phase 4 — HLS plugin
 
-**Goal.** Surface ocelli diagnostics inside the editor. This is the practical-tool
+**Goal.** Surface `ocelli` diagnostics inside the editor. This is the practical-tool
 payoff. The plugin depends on the `ocelli` library and reuses the Phase 1 rule
 functions directly — no rule logic is duplicated.
 **Effort.** 4a: L · 4b: M · 4c: M
@@ -195,7 +195,7 @@ functions directly — no rule logic is duplicated.
 
 #### Acceptance criteria
 
-- [ ] With the plugin enabled, ocelli diagnostics appear inline (squiggles) in a
+- [ ] With the plugin enabled, `ocelli` diagnostics appear inline (squiggles) in a
       supported editor on a known-bad file.
 - [ ] Diagnostic ranges point at the right span.
 - [ ] No rule logic is duplicated between the CLI and the plugin.
@@ -204,7 +204,7 @@ functions directly — no rule logic is duplicated.
 
 #### Tasks
 
-- [ ] Add a hover handler that, on an ocelli diagnostic, shows the `message` and
+- [ ] Add a hover handler that, on an `ocelli` diagnostic, shows the `message` and
       `suggestion`.
 - [ ] Optionally include a short "why" explanation per rule (e.g. why lazy `foldl`
       accumulates thunks). This is the one place explanatory depth is in scope, if
@@ -235,7 +235,7 @@ functions directly — no rule logic is duplicated.
 ## Phase 5 — GHC-aware analysis (Core / demand) — not yet specced
 
 **Goal (direction only).** Move from syntactic heuristics toward
-compiler-informed diagnostics: read GHC's strictness/demand analysis so ocelli can
+compiler-informed diagnostics: read GHC's strictness/demand analysis so `ocelli` can
 confirm or retract a heuristic ("the compiler proved this is strict — false
 positive") and surface properties the developer cannot otherwise see.
 

@@ -279,4 +279,4 @@ ocelli/
 
 ## License
 
-BSD-3-Clause.
+[BSD-3-Clause](LICENSE).
