@@ -22,6 +22,8 @@ This file follows its own conventions: changes to it are `docs`-type commits on 
 - PRs are **squash-merged**: `main` gets one clean commit per merged unit.
 - `main` history is **append-only** — never force-push or rewrite it.
 - Progress is tracked by checking boxes in `docs/ROADMAP.md`.
+- Public behavior, API, dependency, and convention changes are recorded in
+  `CHANGELOG.md`.
 
 ## Toolchain
 
@@ -218,6 +220,8 @@ A PR should:
 - In the description, link the roadmap phase it advances (if any) and copy the
   relevant **acceptance criteria** as a checklist, so the PR can be checked
   against them.
+- Mention whether `CHANGELOG.md` was updated, or why no changelog entry is needed.
+- Include tests or explain why the change does not need tests.
 - Be opened only when `cabal build` is clean under `-Wall` and, once the test
   suite exists, `cabal test` passes.
 
@@ -259,6 +263,37 @@ checklist and the `docs/ROADMAP.md` checkboxes should agree.
   A pure roadmap restructure (changing the plan itself, not ticking boxes) is its
   own `chore/` PR with `docs`-type commits.
 
+## Updating the changelog
+
+`CHANGELOG.md` is the source of truth for user-visible, API-visible, and
+release-relevant changes.
+
+Update `CHANGELOG.md` when a change:
+
+- adds, removes, or changes a public module;
+- adds, removes, or changes exported types or functions;
+- changes CLI behavior or output;
+- changes diagnostics or rule semantics;
+- adds, removes, or changes examples used as public documentation;
+- adds, removes, or changes dependencies;
+- changes documented project conventions;
+- fixes a bug users could observe;
+- adds an important test suite or regression case that documents behavior.
+
+Changes that usually do not need a changelog entry:
+
+- typo-only fixes in internal comments;
+- formatting-only changes;
+- local refactors with no semantic effect;
+- temporary scratch files that are not committed.
+
+When in doubt, update the changelog. A small changelog entry is better than an
+undocumented semantic change.
+
+Changelog updates normally land in the same PR as the work they describe.
+Release-preparation branches may also edit `CHANGELOG.md` to finalize release
+notes.
+
 ## Working as a coding agent
 
 If you are an agent picking up work, first determine what kind of work it is.
@@ -282,6 +317,8 @@ If you are an agent picking up work, first determine what kind of work it is.
 
 - Keep commits scoped by concern, each message in `<emoji> <type>: <summary>`
   form, using the reference table to pick type and gitmoji.
+- Update `CHANGELOG.md` for user-visible, API-visible, dependency, diagnostic,
+  or convention changes.
 - Before opening the PR: `cabal build` clean under `-Wall`, `cabal check` clean,
   `cabal test` passing (once it exists).
 - Open a PR targeting `main`. For roadmap work, include the acceptance criteria
