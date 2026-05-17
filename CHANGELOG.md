@@ -1,4 +1,4 @@
-# Revision history for ocelli
+# Revision history for `ocelli`
 
 ## 0.1.0.0 -- 2026-05-08
 

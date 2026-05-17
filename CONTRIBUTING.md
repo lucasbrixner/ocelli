@@ -1,4 +1,4 @@
-# Contributing to ocelli
+# Contributing to `ocelli`
 
 This document defines the working conventions for `ocelli`. It is written to be
 followed by both human contributors and coding agents. The rules are concrete on
